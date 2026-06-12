@@ -448,8 +448,15 @@ class PlanHelper {
       },
     );
 
-    processForPaymentGateway(context, selectedGateway, pkgid);
-      return selectedGateway;
+    selectedGateway == null
+    ? null
+    : processForPaymentGateway(
+        context,
+        selectedGateway,
+        pkgid,
+      );
+
+return selectedGateway;
   }
 
   void processForPaymentGateway(
