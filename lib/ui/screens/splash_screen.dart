@@ -202,56 +202,46 @@ class SplashScreenState extends State<SplashScreen>
                     }
                   },
                   child: SafeArea(
-                    top: false,
-                    child: AnnotatedRegion(
-                      value: SystemUiOverlayStyle(
-                        statusBarColor: context.color.territoryColor,
-                        statusBarIconBrightness: Brightness.light,
-                        systemNavigationBarIconBrightness: Brightness.light,
-                        systemNavigationBarColor: context.color.territoryColor,
-                      ),
-                      child: Scaffold(
-                        backgroundColor: context.color.territoryColor,
-                        bottomNavigationBar: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: UiUtils.getSvg(AppIcons.companyLogo),
-                        ),
-                        body: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              alignment: AlignmentDirectional.center,
-                              padding: EdgeInsets.only(top: 10.0),
-                              width: 150,
-                              height: 150,
-                              child: UiUtils.getSvg(AppIcons.splashLogo),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: CustomText(
-                                AppSettings.applicationName,
-                                fontSize: context.font.xxLarge,
-                                color: context.color.secondaryColor,
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-          )
-        : Material(
+  top: false,
+  child: AnnotatedRegion<SystemUiOverlayStyle>(
+    value: const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+    ),
+    child: Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Expanded(
             child: Center(
-              child: NoInternet(
-                onRetry: () {
-                  setState(() {});
-                },
+              child: SizedBox(
+                width: 220,
+                height: 220,
+                child: UiUtils.getSvg(AppIcons.splashLogo),
               ),
             ),
-          );
-  }
-}
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 25),
+            child: RichText(
+              text: const TextSpan(
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.3,
+                ),
+                children: [
+                  TextSpan(text: "Proudly Made in Kashmir "),
+                  TextSpan(text: "❤️"),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
