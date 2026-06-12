@@ -12,7 +12,20 @@
           "package_name": "com.abdul.kashbird"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "726364425609-1i0asr8qf6vojre977anrbgk1kph8rv9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abdul.kashbird",
+            "certificate_hash": "649bd9d3cde71234e1b8aa24b6c3f2ac240239df"
+          }
+        },
+        {
+          "client_id": "726364425609-d6123g7nsq5pcn06ucaufan0ovi316r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDIyuz4GhhKnAWQyqsvFpxIzUSK7NLJxbE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726364425609-d6123g7nsq5pcn06ucaufan0ovi316r8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
