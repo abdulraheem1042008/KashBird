@@ -104,6 +104,7 @@ flutter:
     - assets/svg/Logo/
     - assets/svg/Illustrators/
     - assets/svg/payment/
+    - assets/images/splash/
     - assets/
 
 
