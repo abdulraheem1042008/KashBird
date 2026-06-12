@@ -235,7 +235,12 @@ class AdDetailsScreenState extends CloudState<AdDetailsScreen> {
 
       if (HelperUtils.isYoutubeVideo(model.videoLink ?? "")) {
         String? videoId = YoutubePlayer.convertUrlToId(model.videoLink!);
-        String thumbnail = YoutubePlayer.getThumbnail(videoId: videoId);
+
+String thumbnail = YoutubePlayer.getThumbnail(
+  videoId: videoId ?? "",
+);
+
+youtubeVideoThumbnail = thumbnail;
 
         youtubeVideoThumbnail = thumbnail;
             } else {
@@ -1522,9 +1527,10 @@ class AdDetailsScreenState extends CloudState<AdDetailsScreen> {
 
   void safetyTipsBottomSheet() {
     List<SafetyTipsModel>? tipsList = context
-        .read<FetchSafetyTipsListCubit>()
-        .getList();
-    if (tipsList.isEmpty) {
+    .read<FetchSafetyTipsListCubit>()
+    .getList();
+
+if (tipsList == null || tipsList.isEmpty) {
       makeOfferBottomSheet(model);
       return;
     }
@@ -1580,12 +1586,12 @@ class AdDetailsScreenState extends CloudState<AdDetailsScreen> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: tipsList.length,
+                itemCount: tipsList?.length ?? 0,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return checkmarkPoint(
                     context,
-                    tipsList[index].translatedName!,
+                    tipsList![index].translatedName!,
                   );
                 },
               ),
