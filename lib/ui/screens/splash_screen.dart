@@ -7,16 +7,10 @@ import 'package:eClassify/data/cubits/system/fetch_language_cubit.dart';
 import 'package:eClassify/data/cubits/system/fetch_system_settings_cubit.dart';
 import 'package:eClassify/data/cubits/system/language_cubit.dart';
 import 'package:eClassify/data/model/system_settings_model.dart';
-import 'package:eClassify/settings.dart';
 import 'package:eClassify/ui/screens/widgets/errors/no_internet.dart';
-import 'package:eClassify/ui/theme/theme.dart';
-import 'package:eClassify/utils/app_icon.dart';
 import 'package:eClassify/utils/constant.dart';
-import 'package:eClassify/utils/custom_text.dart';
-import 'package:eClassify/utils/extensions/extensions.dart';
 import 'package:eClassify/utils/helper_utils.dart';
 import 'package:eClassify/utils/hive_utils.dart';
-import 'package:eClassify/utils/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +18,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({this.itemSlug, super.key, this.sellerId});
 
-  //Used when the app is terminated and then is opened using deep link, in which case
-  //the main route needs to be added to navigation stack, previously it directly used to
-  //push adDetails route.
+  // Used when the app is terminated and then is opened using deep link, in which case
+  // the main route needs to be added to navigation stack, previously it directly used to
+  // push adDetails route.
   final String? itemSlug;
   final String? sellerId;
 
@@ -47,12 +41,12 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     subscription = Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
-        hasInternet = (!result.contains(ConnectivityResult.none));
+        hasInternet = !result.contains(ConnectivityResult.none);
       });
       if (hasInternet) {
         context.read<FetchSystemSettingsCubit>().fetchSettings(
-          forceRefresh: true,
-        );
+              forceRefresh: true,
+            );
         startTimer();
       }
     });
@@ -64,7 +58,7 @@ class SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  Future _getDefaultLanguage({
+  Future<void> _getDefaultLanguage({
     required String defaultCode,
     required String? currentCode,
   }) async {
@@ -72,6 +66,7 @@ class SplashScreenState extends State<SplashScreen>
       final languageData = Map<String, dynamic>.from(
         HiveUtils.getLanguage() ?? {},
       );
+
       // Check the language code that settings api returned the response in
       // if the language code is equal to the locally stored language then we directly
       // use the local language.
@@ -95,7 +90,9 @@ class SplashScreenState extends State<SplashScreen>
   Future<void> startTimer() async {
     Timer(const Duration(seconds: 1), () {
       isTimerCompleted = true;
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -124,7 +121,7 @@ class SplashScreenState extends State<SplashScreen>
     } else if (HiveUtils.isUserAuthenticated()) {
       Future.delayed(const Duration(seconds: 1), () {
         if (mounted) {
-          //We pass slug only when the user is authenticated otherwise drop the slug
+          // We pass slug only when the user is authenticated otherwise drop the slug
           Navigator.of(context).pushReplacementNamed(
             Routes.main,
             arguments: {
@@ -158,101 +155,109 @@ class SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     navigateCheck();
+
     return hasInternet
         ? BlocListener<FetchLanguageCubit, FetchLanguageState>(
             listener: (context, state) {
               if (state is FetchLanguageSuccess) {
-                Map<String, dynamic> map = state.toMap();
+                final Map<String, dynamic> map = state.toMap();
 
-                var data = map['file_name'];
+                final data = map['file_name'];
                 map['data'] = data;
                 map.remove("file_name");
 
                 HiveUtils.storeLanguage(map);
                 context.read<LanguageCubit>().changeLanguages(map);
                 isLanguageLoaded = true;
+
                 if (mounted) {
                   setState(() {});
                 }
               }
+
               if (state is FetchLanguageFailure) {
                 HelperUtils.showSnackBarMessage(context, state.errorMessage);
               }
             },
-            child:
-                BlocListener<
-                  FetchSystemSettingsCubit,
-                  FetchSystemSettingsState
-                >(
-                  listener: (context, state) {
-                    if (state is FetchSystemSettingsSuccess) {
-                      Constant.isDemoModeOn = context
-                          .read<FetchSystemSettingsCubit>()
-                          .getSetting(SystemSetting.demoMode);
-                      _getDefaultLanguage(
-                        defaultCode: state.settings['data']['default_language'],
-                        currentCode:
-                            state.settings['data']?['current_language'],
-                      );
-                      isSettingsLoaded = true;
-                      setState(() {});
-                    }
-                    if (state is FetchSystemSettingsFailure) {
-                      log('${state.errorMessage}');
-                    }
-                  },
-                  child: SafeArea(
-  top: false,
-  child: AnnotatedRegion<SystemUiOverlayStyle>(
-    value: const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-    ),
-    child: Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: SizedBox(
-                width: 220,
-                height: 220,
-<<<<<<< HEAD
-                child: UiUtils.getSvg(AppIcons.splashLogo),
-=======
-                 child: Image.asset(
-    "assets/images/splash/kashbird_logo.png",
-    fit: BoxFit.contain,
-  ),
->>>>>>> 6683cc9 (Updated)
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25),
-            child: RichText(
-              text: const TextSpan(
-                style: TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.3,
+            child: BlocListener<
+                FetchSystemSettingsCubit,
+                FetchSystemSettingsState>(
+              listener: (context, state) {
+                if (state is FetchSystemSettingsSuccess) {
+                  Constant.isDemoModeOn = context
+                      .read<FetchSystemSettingsCubit>()
+                      .getSetting(SystemSetting.demoMode);
+
+                  _getDefaultLanguage(
+                    defaultCode: state.settings['data']['default_language'],
+                    currentCode: state.settings['data']?['current_language'],
+                  );
+
+                  isSettingsLoaded = true;
+                  setState(() {});
+                }
+
+                if (state is FetchSystemSettingsFailure) {
+                  log('${state.errorMessage}');
+                }
+              },
+              child: SafeArea(
+                top: false,
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: const SystemUiOverlayStyle(
+                    statusBarColor: Colors.white,
+                    statusBarIconBrightness: Brightness.dark,
+                    systemNavigationBarIconBrightness: Brightness.dark,
+                    systemNavigationBarColor: Colors.white,
+                  ),
+                  child: Scaffold(
+                    backgroundColor: Colors.white,
+                    body: Column(
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: SizedBox(
+                              width: 220,
+                              height: 220,
+                              child: Image.asset(
+                                "assets/images/splash/kashbird_logo.png",
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 25),
+                          child: RichText(
+                            text: const TextSpan(
+                              style: TextStyle(
+                                color: Color(0xFF666666),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.3,
+                              ),
+                              children: [
+                                TextSpan(text: "Proudly Made in Kashmir "),
+                                TextSpan(text: "❤️"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                children: [
-                  TextSpan(text: "Proudly Made in Kashmir "),
-                  TextSpan(text: "❤️"),
-                ],
               ),
             ),
-          ),
-        ],
-      ),
-    ),
-  ),
-<<<<<<< HEAD
-),
-=======
-),
->>>>>>> 6683cc9 (Updated)
+          )
+        : Material(
+            child: Center(
+              child: NoInternet(
+                onRetry: () {
+                  setState(() {});
+                },
+              ),
+            ),
+          );
+  }
+}
