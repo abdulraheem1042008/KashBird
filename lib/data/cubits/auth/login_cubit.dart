@@ -206,11 +206,9 @@ class LoginCubit extends Cubit<LoginState> {
 
   /// Checks if the profile is completed
   bool _isProfileCompleted(Map<String, dynamic> data) {
-    return !(data['name'] == "" ||
-        data['name'] == null ||
-        data['email'] == "" ||
-        data['email'] == null);
-  }
+  return data['name'] != null &&
+      data['name'].toString().trim().isNotEmpty;
+}
 
   /// Validates Twilio credential format
   bool _isValidTwilioCredential(Map<String, dynamic> credential) {
