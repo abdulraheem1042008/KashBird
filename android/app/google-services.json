@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "726364425609",
+    "project_id": "kashbird-f2c10",
+    "storage_bucket": "kashbird-f2c10.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726364425609:android:e5804a6127e2b24d6da558",
+        "android_client_info": {
+          "package_name": "com.abdul.kashbird"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIyuz4GhhKnAWQyqsvFpxIzUSK7NLJxbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
