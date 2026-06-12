@@ -242,7 +242,7 @@ class NotificationController {
   static Future<void> onActionReceivedMethod(
     ReceivedAction receivedAction,
   ) async {
-    Map<String, String?>? payload = receivedAction.payload;
+    final payload = receivedAction.payload ?? <String, String?>{};
     print(payload);
     if (payload['type'] == Constant.notificationTypeChat) {
       var username = payload['user_name'];
