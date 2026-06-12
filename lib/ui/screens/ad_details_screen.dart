@@ -235,12 +235,10 @@ class AdDetailsScreenState extends CloudState<AdDetailsScreen> {
 
       if (HelperUtils.isYoutubeVideo(model.videoLink ?? "")) {
         String? videoId = YoutubePlayer.convertUrlToId(model.videoLink!);
-        if (videoId != null) {
-          String thumbnail = YoutubePlayer.getThumbnail(videoId: videoId);
+        String thumbnail = YoutubePlayer.getThumbnail(videoId: videoId);
 
-          youtubeVideoThumbnail = thumbnail;
-        }
-      } else {
+        youtubeVideoThumbnail = thumbnail;
+            } else {
         flickManager = FlickManager(
           videoPlayerController: VideoPlayerController.networkUrl(
             Uri.parse(model.videoLink!),
@@ -1526,7 +1524,7 @@ class AdDetailsScreenState extends CloudState<AdDetailsScreen> {
     List<SafetyTipsModel>? tipsList = context
         .read<FetchSafetyTipsListCubit>()
         .getList();
-    if (tipsList == null || tipsList.isEmpty) {
+    if (tipsList.isEmpty) {
       makeOfferBottomSheet(model);
       return;
     }

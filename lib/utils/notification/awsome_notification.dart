@@ -244,17 +244,17 @@ class NotificationController {
   ) async {
     Map<String, String?>? payload = receivedAction.payload;
     print(payload);
-    if (payload?['type'] == Constant.notificationTypeChat) {
-      var username = payload?['user_name'];
-      var itemImage = payload?['item_image'];
-      var itemName = payload?['item_name'];
-      var userProfile = payload?['user_profile'];
-      var senderId = payload?['user_id'];
-      var itemId = payload?['item_id'];
-      var date = payload?['created_at'];
-      var itemOfferId = payload?['item_offer_id'];
-      var itemPrice = payload?['item_price'];
-      var itemOfferPrice = payload?['item_offer_amount'];
+    if (payload['type'] == Constant.notificationTypeChat) {
+      var username = payload['user_name'];
+      var itemImage = payload['item_image'];
+      var itemName = payload['item_name'];
+      var userProfile = payload['user_profile'];
+      var senderId = payload['user_id'];
+      var itemId = payload['item_id'];
+      var date = payload['created_at'];
+      var itemOfferId = payload['item_offer_id'];
+      var itemPrice = payload['item_price'];
+      var itemOfferPrice = payload['item_offer_amount'];
       Future.delayed(Duration.zero, () {
         Navigator.push(
           Constant.navigatorKey.currentContext!,
@@ -292,18 +292,18 @@ class NotificationController {
           ),
         );
       });
-    } else if (payload?['type'] == Constant.notificationTypeOffer) {
+    } else if (payload['type'] == Constant.notificationTypeOffer) {
       if (HiveUtils.isUserAuthenticated()) {
-        var username = payload?['user_name'];
-        var itemImage = payload?['item_image'];
-        var itemName = payload?['item_name'];
-        var userProfile = payload?['user_profile'];
-        var senderId = payload?['user_id'];
-        var itemId = payload?['item_id'];
-        var date = payload?['created_at'];
-        var itemOfferId = payload?['item_offer_id'];
-        var itemPrice = payload?['item_price'];
-        var itemOfferPrice = payload?['item_offer_amount'] ?? null;
+        var username = payload['user_name'];
+        var itemImage = payload['item_image'];
+        var itemName = payload['item_name'];
+        var userProfile = payload['user_profile'];
+        var senderId = payload['user_id'];
+        var itemId = payload['item_id'];
+        var date = payload['created_at'];
+        var itemOfferId = payload['item_offer_id'];
+        var itemPrice = payload['item_price'];
+        var itemOfferPrice = payload['item_offer_amount'] ?? null;
 
         Constant.navigatorKey.currentContext!
             .read<GetSellerChatListCubit>()
@@ -386,7 +386,7 @@ class NotificationController {
           );
         });
       }
-    } else if (payload?['type'] == Constant.notificationTypeItemUpdate) {
+    } else if (payload['type'] == Constant.notificationTypeItemUpdate) {
       Future.delayed(Duration.zero, () {
         Navigator.popUntil(
           Constant.navigatorKey.currentContext!,
@@ -397,8 +397,8 @@ class NotificationController {
             .read<FetchMyItemsCubit>()
             .fetchMyItems(getItemsWithStatus: selectItemStatus);
       });
-    } else if (payload?['type'] == Constant.notificationTypeItemEdit) {
-      var id = int.tryParse(payload?["id"] ?? "");
+    } else if (payload['type'] == Constant.notificationTypeItemEdit) {
+      var id = int.tryParse(payload["id"] ?? "");
       if (id == null) return;
       Navigator.pushNamed(
         Constant.navigatorKey.currentContext!,
@@ -408,13 +408,13 @@ class NotificationController {
       Constant.navigatorKey.currentContext!
           .read<FetchMyItemsCubit>()
           .fetchMyItems(getItemsWithStatus: selectItemStatus);
-    } else if (payload?['type'] == Constant.notificationTypeJobApplication) {
+    } else if (payload['type'] == Constant.notificationTypeJobApplication) {
       Navigator.pushNamed(
         Constant.navigatorKey.currentContext!,
         Routes.jobApplicationList,
-        arguments: {'itemId': int.tryParse(payload?['item_id'] ?? '') ?? 0},
+        arguments: {'itemId': int.tryParse(payload['item_id'] ?? '') ?? 0},
       );
-    } else if (payload?['type'] == Constant.notificationTypeApplicationStatus) {
+    } else if (payload['type'] == Constant.notificationTypeApplicationStatus) {
       Navigator.pushNamed(
         Constant.navigatorKey.currentContext!,
         Routes.jobApplicationList,
@@ -422,14 +422,14 @@ class NotificationController {
       );
     } else if (receivedAction.payload?["item_id"] != null &&
         receivedAction.payload?["item_id"] != '') {
-      var id = int.tryParse(payload?["id"] ?? "");
+      var id = int.tryParse(payload["id"] ?? "");
       if (id == null) return;
       Navigator.pushNamed(
         Constant.navigatorKey.currentContext!,
         Routes.adDetailsScreen,
         arguments: {'item_id': id},
       );
-    } else if (payload?['type'] == Constant.notificationTypePayment) {
+    } else if (payload['type'] == Constant.notificationTypePayment) {
       if (HiveUtils.isUserAuthenticated()) {
         Future.delayed(Duration.zero, () {
           Navigator.pushNamed(
@@ -446,7 +446,7 @@ class NotificationController {
           );
         });
       }
-    } else if (payload?['type'] ==
+    } else if (payload['type'] ==
         Constant.notificationTypeVerificationStatus) {
       Constant.navigatorKey.currentContext
           ?.read<FetchVerificationRequestsCubit>()

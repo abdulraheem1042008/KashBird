@@ -219,7 +219,14 @@ class SplashScreenState extends State<SplashScreen>
               child: SizedBox(
                 width: 220,
                 height: 220,
+<<<<<<< HEAD
                 child: UiUtils.getSvg(AppIcons.splashLogo),
+=======
+                 child: Image.asset(
+    "assets/images/splash/kashbird_logo.png",
+    fit: BoxFit.contain,
+  ),
+>>>>>>> 6683cc9 (Updated)
               ),
             ),
           ),
@@ -244,4 +251,8 @@ class SplashScreenState extends State<SplashScreen>
       ),
     ),
   ),
+<<<<<<< HEAD
 ),
+=======
+),
+>>>>>>> 6683cc9 (Updated)
