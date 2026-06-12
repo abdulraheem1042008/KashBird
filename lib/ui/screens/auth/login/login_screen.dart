@@ -320,8 +320,8 @@ class LoginScreenState extends State<LoginScreen> {
                   if (state.isProfileCompleted) {
                     HiveUtils.setUserIsAuthenticated(true);
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.locationPermissionScreen,
-                      (route) => false,
+                    Routes.main,
+                    (route) => false,
                     );
                   } else {
                     Navigator.pushNamed(
