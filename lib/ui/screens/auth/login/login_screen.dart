@@ -313,10 +313,14 @@ class LoginScreenState extends State<LoginScreen> {
                 : SizedBox.shrink(),
             body: BlocListener<LoginCubit, LoginState>(
               listener: (context, state) {
-                if (state is LoginSuccess) {
-                  context.read<UserDetailsCubit>().fill(
-                    HiveUtils.getUserDetails(),
-                  );
+               if (state is LoginSuccess) {
+  print("LOGIN SUCCESS RECEIVED");
+  print("PROFILE STATUS: ${state.isProfileCompleted}");
+  print("USER DATA: ${HiveUtils.getUserDetails()}");
+
+  context.read<UserDetailsCubit>().fill(
+    HiveUtils.getUserDetails(),
+  );
                   if (state.isProfileCompleted) {
                     HiveUtils.setUserIsAuthenticated(true);
                     Navigator.of(context).pushNamedAndRemoveUntil(
